@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== AJUSTES: cambia aquí colores, tamaño y alineación ===== */
+  :root {
+    --star: #F5A623;           /* color de las estrellas */
+    --text: #F4F1EC;           /* texto claro para ir sobre el video del hero */
+    --text-soft: rgba(244, 241, 236, 0.8);
+    --size: 22px;              /* tamaño de cada estrella */
+    --font: 'Lexend', system-ui, -apple-system, sans-serif;
+    --align: flex-start;       /* flex-start = izquierda · center = centro · flex-end = derecha */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    justify-content: var(--align);
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    font-family: var(--font);
+    color: var(--text);
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+  }
+
+  .stars { display: flex; gap: 3px; }
+  .stars svg { width: var(--size); height: var(--size); display: block; }
+
+  .score {
+    font-size: calc(var(--size) * 0.95);
+    font-weight: 600;
+  }
+
+  .count {
+    font-size: calc(var(--size) * 0.8);
+    font-weight: 400;
+    color: var(--text-soft);
+  }
+
+  @keyframes in { to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rating { animation: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="rating" role="img" aria-label="Rated 5.0 out of 5 from 280 reviews">
+    <div class="stars" id="stars"></div>
+    <span class="score">5.0</span>
+    <span class="count">(280 reviews)</span>
+  </div>
+
+<script>
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="var(--star)" d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5L7 14.3l-5.3-5 7.2-.9z"/></svg>';
+  document.getElementById('stars').innerHTML = STAR.repeat(5);
+</script>
+</body>
+</html>
