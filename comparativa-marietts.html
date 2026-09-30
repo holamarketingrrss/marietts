@@ -8,12 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ===== TIPOGRAFÍA DE TÍTULOS: FSP DEMO =====
-     No es una fuente de Google, así que el bloque no puede cargarla solo.
-     Pega entre las comillas de url('') el enlace .woff2/.woff/.ttf del archivo de la fuente.
-     Mientras esté vacío, el título se verá con la fuente de respaldo (Georgia). */
+     Estas son las dos fuentes subidas a tu web de Wix.
+     El título usa 'FSP DEMO' (opción A). Si al verlo no es la fuente correcta,
+     cambia --font-display más abajo a 'FSP DEMO B'. */
   @font-face {
     font-family: 'FSP DEMO';
-    src: url('');
+    src: url("https://static.wixstatic.com/ufonts/24f85d_3d335c6abbde4bf58a92c9157fe86e75/woff2/file.woff2") format("woff2"),
+         url("https://static.wixstatic.com/ufonts/24f85d_3d335c6abbde4bf58a92c9157fe86e75/woff/file.woff") format("woff"),
+         url("https://static.wixstatic.com/ufonts/24f85d_3d335c6abbde4bf58a92c9157fe86e75/ttf/file.ttf") format("truetype");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'FSP DEMO B';
+    src: url("https://static.wixstatic.com/ufonts/43795b_cd57c0ab3ede43a18115b8e6d00c4b7d/woff2/file.woff2") format("woff2"),
+         url("https://static.wixstatic.com/ufonts/43795b_cd57c0ab3ede43a18115b8e6d00c4b7d/woff/file.woff") format("woff"),
+         url("https://static.wixstatic.com/ufonts/43795b_cd57c0ab3ede43a18115b8e6d00c4b7d/ttf/file.ttf") format("truetype");
     font-display: swap;
   }
 
@@ -27,7 +36,7 @@
     --muted-text: #6E6552;
     --text: #433A26;           /* texto */
     --bg: #F4F1EC;             /* fondo de la sección */
-    --font-display: 'FSP DEMO', Georgia, serif;
+    --font-display: 'FSP DEMO', Georgia, serif;   /* opción B: 'FSP DEMO B' */
     --font-body: 'Lexend', system-ui, -apple-system, sans-serif;
     --radius: 12px;
   }
