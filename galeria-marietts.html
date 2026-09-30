@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cols: 4;          /* imágenes por fila en escritorio */
+    --gap: 16px;        /* separación entre fotos */
+    --radius: 0px;      /* esquinas: sube a 12px o 20px si las quieres redondeadas */
+    --ratio: 2 / 3;     /* formato vertical, como en la referencia */
+  }
+
+  body {
+    background: transparent;
+    overflow: clip;
+    padding: 8px 0;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: var(--gap);
+    width: 100%;
+  }
+
+  .item {
+    aspect-ratio: var(--ratio);
+    border-radius: var(--radius);
+    overflow: clip;
+    background: rgba(0, 0, 0, 0.04);
+
+    /* estado inicial de la animación */
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s ease,
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--delay, 0s);
+  }
+
+  .item.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .item:hover img {
+    transform: scale(1.03);
+  }
+
+  @media (max-width: 900px) {
+    :root { --cols: 3; --gap: 12px; }
+  }
+
+  @media (max-width: 600px) {
+    :root { --cols: 2; --gap: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .item { opacity: 1; transform: none; transition: none; }
+    .item img { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="gallery" id="gallery"></div>
+
+<script>
+  const images = [
+    "https://static.wixstatic.com/media/c7958e_a8d1f2db0b584343a608252a3f7851ac~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_1b19a819f26f4c4fa6d9d997a5d77b9e~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_2544021643c84285b728e1974f1b4d8f~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_1b6b97d9a53843518be46f3c010312d1~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_05c0d1cd6a334d2999696c7edfbb849e~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_78bf85a6f2f848dba0bbd5ff28bf429e~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_91981de01ea54b98866b8e0625a0b3ee~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_2383fc120c244c8188b18aef8ff2a563~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_a5c569d1405d4b5081d229a33e3a200d~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_2a39b391d4244cd392ac416a31a5e676~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_f86c7318ceb34c4ea6ddc5b0d68a69a2~mv2.png",
+    "https://static.wixstatic.com/media/c7958e_3f0f670401e34d8385dca20d7c9edf66~mv2.png",
+  ];
+
+  const gallery = document.getElementById('gallery');
+
+  images.forEach(src => {
+    const item = document.createElement('div');
+    item.className = 'item';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = "Mariett's Flavors";
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.addEventListener('load', notifyHeight);
+    item.appendChild(img);
+    gallery.appendChild(item);
+  });
+
+  // Escalonado: cada foto de una misma fila entra un poco después que la anterior
+  function setDelays() {
+    const cols = getComputedStyle(gallery).gridTemplateColumns.split(' ').length;
+    gallery.querySelectorAll('.item').forEach((el, i) => {
+      el.style.setProperty('--delay', (i % cols) * 0.12 + 's');
+    });
+  }
+
+  // Aparición suave al hacer scroll
+  function setupReveal() {
+    const items = gallery.querySelectorAll('.item');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(el => observer.observe(el));
+  }
+
+  function notifyHeight() {
+    window.parent.postMessage({ type: 'iwResizeHeight', height: document.body.scrollHeight }, '*');
+  }
+
+  setDelays();
+  setupReveal();
+  window.addEventListener('load', notifyHeight);
+  window.addEventListener('resize', () => { setDelays(); notifyHeight(); });
+  setTimeout(notifyHeight, 300);
+</script>
+</body>
+</html>
