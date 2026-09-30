@@ -5,26 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ===== MARCA: cambia aquí colores y tipografías de Mariett's Flavors ===== */
+  /* ===== TIPOGRAFÍA DE TÍTULOS: FSP DEMO =====
+     No es una fuente de Google, así que el bloque no puede cargarla solo.
+     Pega entre las comillas de url('') el enlace .woff2/.woff/.ttf del archivo de la fuente.
+     Mientras esté vacío, el título se verá con la fuente de respaldo (Georgia). */
+  @font-face {
+    font-family: 'FSP DEMO';
+    src: url('');
+    font-display: swap;
+  }
+
+  /* ===== MARCA: colores y tipografías de Mariett's Flavors ===== */
   :root {
-    --brand: #3B2A20;          /* color principal (encabezado, bordes, botón) */
-    --brand-contrast: #FFFDF2; /* texto sobre el color principal */
-    --brand-soft: #F6F0E4;     /* fondo de las tarjetas de Mariett's */
-    --muted-bg: #F4F3EF;       /* fondo de las tarjetas "Other vendors" */
-    --muted-border: #E6E3DC;
-    --muted-text: #6F6A63;
-    --text: #1E1A17;
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --brand: #6C745D;          /* acento: encabezado, bordes, botón, checks */
+    --brand-contrast: #F4F1EC; /* texto sobre el acento */
+    --brand-soft: #E7E9E0;     /* fondo de las tarjetas de Mariett's (acento suave) */
+    --muted-bg: #EAE6DE;       /* fondo de las tarjetas "Other vendors" */
+    --muted-border: #DCD6CA;
+    --muted-text: #6E6552;
+    --text: #433A26;           /* texto */
+    --bg: #F4F1EC;             /* fondo de la sección */
+    --font-display: 'FSP DEMO', Georgia, serif;
+    --font-body: 'Lexend', system-ui, -apple-system, sans-serif;
     --radius: 12px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: transparent;
+    background: var(--bg);
     overflow: clip;
     font-family: var(--font-body);
     color: var(--text);
@@ -46,7 +57,7 @@
 
   h2 {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 400;
     font-size: clamp(34px, 5vw, 58px);
     line-height: 1.05;
     margin-bottom: 20px;
@@ -55,7 +66,8 @@
   .lead {
     font-size: clamp(16px, 1.6vw, 19px);
     line-height: 1.7;
-    color: #3F3A35;
+    color: var(--text);
+    font-weight: 300;
   }
 
   /* ----- Tabla ----- */
@@ -106,7 +118,7 @@
     font-weight: 600;
     line-height: 1.4;
   }
-  .cell.other .cell-title { color: #3A3632; }
+  .cell.other .cell-title { color: #5C523D; }
 
   .icon { flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px; }
 
@@ -116,7 +128,7 @@
     color: var(--muted-text);
     margin: 22px 0 0 34px;
   }
-  .cell.ours .cell-desc { color: #4A3F37; }
+  .cell.ours .cell-desc { color: var(--text); }
 
   /* ----- CTA ----- */
   .cta-wrap { text-align: center; margin-top: 56px; }
@@ -239,7 +251,7 @@
     },
   ];
 
-  const ICON_NO = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#B9B4AC"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+  const ICON_NO = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#B4AC9C"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
   const ICON_YES = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--brand)"/><path d="M7.5 12.5l3 3 6-6.5" stroke="var(--brand-contrast)" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function cell(kind, data, delay) {
