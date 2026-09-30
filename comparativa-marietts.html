@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== MARCA: cambia aquí colores y tipografías de Mariett's Flavors ===== */
+  :root {
+    --brand: #3B2A20;          /* color principal (encabezado, bordes, botón) */
+    --brand-contrast: #FFFDF2; /* texto sobre el color principal */
+    --brand-soft: #F6F0E4;     /* fondo de las tarjetas de Mariett's */
+    --muted-bg: #F4F3EF;       /* fondo de las tarjetas "Other vendors" */
+    --muted-border: #E6E3DC;
+    --muted-text: #6F6A63;
+    --text: #1E1A17;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: transparent;
+    overflow: clip;
+    font-family: var(--font-body);
+    color: var(--text);
+    padding: 8px 16px;
+  }
+
+  .wrap { max-width: 1280px; margin: 0 auto; }
+
+  /* ----- Encabezado ----- */
+  .intro { text-align: center; max-width: 860px; margin: 0 auto 48px; }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .lead {
+    font-size: clamp(16px, 1.6vw, 19px);
+    line-height: 1.7;
+    color: #3F3A35;
+  }
+
+  /* ----- Tabla ----- */
+  .table {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    column-gap: 16px;
+  }
+
+  .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .col-head.other { background: var(--muted-bg); color: var(--muted-text); }
+  .col-head.ours  { background: var(--brand); color: var(--brand-contrast); }
+
+  .label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .cell {
+    border-radius: var(--radius);
+    padding: 26px 26px 30px;
+    margin-bottom: 2px;
+    min-height: 100px;
+  }
+  .cell.other { background: var(--muted-bg); border: 1px solid var(--muted-border); }
+  .cell.ours  { background: var(--brand-soft); border: 2px solid var(--brand); }
+
+  .cell-title {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .cell.other .cell-title { color: #3A3632; }
+
+  .icon { flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px; }
+
+  .cell-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted-text);
+    margin: 22px 0 0 34px;
+  }
+  .cell.ours .cell-desc { color: #4A3F37; }
+
+  /* ----- CTA ----- */
+  .cta-wrap { text-align: center; margin-top: 56px; }
+
+  .cta {
+    display: inline-block;
+    background: var(--brand);
+    color: var(--brand-contrast);
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 24px 56px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .cta:hover { transform: translateY(-2px); opacity: 0.92; }
+
+  .cta-note { margin-top: 14px; font-size: 15px; color: var(--muted-text); }
+
+  /* ----- Aparición suave ----- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--delay, 0s);
+  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+
+  /* ----- Móvil: cada fila se apila ----- */
+  @media (max-width: 760px) {
+    .intro { margin-bottom: 32px; }
+    .table { grid-template-columns: 1fr; }
+    .col-head { display: none; }
+    .label { margin: 26px 0 10px; }
+    .cell { padding: 20px 18px 22px; min-height: 0; margin-bottom: 10px; }
+    .cell::before {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cell.other::before { content: 'Other vendors'; color: var(--muted-text); }
+    .cell.ours::before  { content: "Mariett's Flavors"; color: var(--brand); }
+    .cell-title { font-size: 17px; }
+    .cell-desc { margin-top: 12px; font-size: 14px; }
+    .cta { padding: 20px 28px; font-size: 15px; width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro reveal">
+    <p class="eyebrow">What should you look for in a coffee cart for your event?</p>
+    <h2>When Every Detail Matters, Your Coffee Partner Should Too</h2>
+    <p class="lead">Mariett's Flavors brings a higher standard to coffee catering, with a fully managed mobile coffee bar, experienced baristas, custom branding and a menu designed to make your event unforgettable.</p>
+  </div>
+
+  <div class="table" id="table">
+    <div></div>
+    <div class="col-head other reveal">Other vendors</div>
+    <div class="col-head ours reveal" style="--delay:.1s">Mariett's Flavors</div>
+  </div>
+
+  <div class="cta-wrap reveal">
+    <a class="cta" id="cta" target="_top">Get your quote &rarr;</a>
+    <p class="cta-note" id="cta-note"></p>
+  </div>
+
+</div>
+
+<script>
+  /* ===== CONTENIDO: edita aquí filas, textos, enlace y precio ===== */
+  const CTA_URL  = "https://www.mariettsflavors.info/";   // adónde lleva el botón
+  const CTA_NOTE = "";                                    // ej: "Events starting at $1,050" (vacío = no se muestra)
+
+  const rows = [
+    {
+      label: "Insurance",
+      other: { title: "Uninsured or uncertified", desc: "Can get turned away at venues that require proof of coverage." },
+      ours:  { title: "Certificate of insurance provided", desc: "Ready for venues that require proof of coverage, no delays." }
+    },
+    {
+      label: "Team",
+      other: { title: "One person doing it all", desc: "Sales, setup and service handled by a single operator." },
+      ours:  { title: "A dedicated event coordinator guides your booking and planning", desc: "Experienced baristas run the show at your event." }
+    },
+    {
+      label: "Cart branding",
+      other: { title: "Front of the cart only" },
+      ours:  { title: "Fully branded cart, designed around your event" }
+    },
+    {
+      label: "Cups",
+      other: { title: "Stickers only" },
+      ours:  { title: "Fully branded, printed cups" }
+    },
+    {
+      label: "Menu",
+      other: { title: "Too many cluttered options", desc: "Confusing to order, slower service, less consistent drinks and a cluttered cart." },
+      ours:  { title: "A curated specialty menu", desc: "Espresso, matcha and signature drinks. Better flow, faster service, better drinks." }
+    },
+    {
+      label: "Confirmations",
+      other: { title: "Details worked out the day of" },
+      ours:  { title: "Everything confirmed in advance" }
+    },
+    {
+      label: "Capacity",
+      other: { title: "One cart, low capacity" },
+      ours:  { title: "Scales to large events" }
+    },
+  ];
+
+  const ICON_NO = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#B9B4AC"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+  const ICON_YES = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--brand)"/><path d="M7.5 12.5l3 3 6-6.5" stroke="var(--brand-contrast)" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function cell(kind, data, delay) {
+    const el = document.createElement('div');
+    el.className = 'cell reveal ' + kind;
+    el.style.setProperty('--delay', delay + 's');
+    const title = document.createElement('div');
+    title.className = 'cell-title';
+    title.innerHTML = kind === 'ours' ? ICON_YES : ICON_NO;
+    title.append(data.title);
+    el.appendChild(title);
+    if (data.desc) {
+      const p = document.createElement('p');
+      p.className = 'cell-desc';
+      p.textContent = data.desc;
+      el.appendChild(p);
+    }
+    return el;
+  }
+
+  const table = document.getElementById('table');
+  rows.forEach(row => {
+    const label = document.createElement('div');
+    label.className = 'label reveal';
+    label.textContent = row.label;
+    table.append(label, cell('other', row.other, 0.08), cell('ours', row.ours, 0.16));
+  });
+
+  document.getElementById('cta').href = CTA_URL;
+  const note = document.getElementById('cta-note');
+  if (CTA_NOTE) note.textContent = CTA_NOTE; else note.remove();
+
+  // Aparición suave al hacer scroll
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(el => observer.observe(el));
+  } else {
+    items.forEach(el => el.classList.add('is-visible'));
+  }
+
+  function notifyHeight() {
+    window.parent.postMessage({ type: 'iwResizeHeight', height: document.body.scrollHeight }, '*');
+  }
+  window.addEventListener('load', notifyHeight);
+  window.addEventListener('resize', notifyHeight);
+  if (document.fonts) document.fonts.ready.then(notifyHeight);
+  setTimeout(notifyHeight, 300);
+</script>
+</body>
+</html>
