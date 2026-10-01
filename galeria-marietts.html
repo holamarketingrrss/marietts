@@ -7,7 +7,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --cols: 4;          /* imágenes por fila en escritorio */
+    --cols: 5;          /* imágenes por fila en escritorio: 20 fotos = 4 filas de 5 */
     --gap: 16px;        /* separación entre fotos */
     --radius: 0px;      /* esquinas: sube a 12px o 20px si las quieres redondeadas */
     --ratio: 2 / 3;     /* formato vertical, como en la referencia */
@@ -24,6 +24,7 @@
     grid-template-columns: repeat(var(--cols), 1fr);
     gap: var(--gap);
     width: 100%;
+    height: auto;
   }
 
   .item {
@@ -59,7 +60,7 @@
   }
 
   @media (max-width: 900px) {
-    :root { --cols: 3; --gap: 12px; }
+    :root { --cols: 4; --gap: 12px; }
   }
 
   @media (max-width: 600px) {
@@ -77,18 +78,30 @@
 
 <script>
   const images = [
-    "https://static.wixstatic.com/media/c7958e_a8d1f2db0b584343a608252a3f7851ac~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_1b19a819f26f4c4fa6d9d997a5d77b9e~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_2544021643c84285b728e1974f1b4d8f~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_1b6b97d9a53843518be46f3c010312d1~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_05c0d1cd6a334d2999696c7edfbb849e~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_78bf85a6f2f848dba0bbd5ff28bf429e~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_91981de01ea54b98866b8e0625a0b3ee~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_2383fc120c244c8188b18aef8ff2a563~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_a5c569d1405d4b5081d229a33e3a200d~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_2a39b391d4244cd392ac416a31a5e676~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_f86c7318ceb34c4ea6ddc5b0d68a69a2~mv2.png",
-    "https://static.wixstatic.com/media/c7958e_3f0f670401e34d8385dca20d7c9edf66~mv2.png",
+    "https://static.wixstatic.com/media/62f4bb_ba506e5efc9c4063b5704e4281d08f06~mv2.webp", // fotos web (1)
+    "https://static.wixstatic.com/media/62f4bb_08f8d51ff9d54cd6aa39b4582930dc32~mv2.webp", // fotos web (2)
+    "https://static.wixstatic.com/media/62f4bb_cf5e346eaf174e6cb83364e52ca3278d~mv2.webp", // fotos web (3)
+    "https://static.wixstatic.com/media/62f4bb_88858a8549e6472399921244a5086403~mv2.webp", // fotos web (4)
+    "https://static.wixstatic.com/media/62f4bb_90ec95e9b48440d9a892e45b29a8ba3a~mv2.webp", // fotos web (5)
+    "https://static.wixstatic.com/media/62f4bb_13ee27930e7a467595e025ae15b1d052~mv2.webp", // fotos web (6)
+    "https://static.wixstatic.com/media/62f4bb_f8d364d073694614a263a2427392818b~mv2.webp", // fotos web (7)
+    "https://static.wixstatic.com/media/62f4bb_af3b4bb6b63940d4b70fad8b011899a0~mv2.webp", // fotos web (8)
+    "https://static.wixstatic.com/media/62f4bb_512342a8be9140e2821356f4675c4cd7~mv2.webp", // fotos web (9)
+    "https://static.wixstatic.com/media/62f4bb_b32863835e5e444f9430e159f1620bd3~mv2.webp", // fotos web (10)
+    "https://static.wixstatic.com/media/62f4bb_0c4fc4c45ec941d2984a038d672dcea1~mv2.webp", // fotos web (11)
+    "https://static.wixstatic.com/media/62f4bb_a512063f4f0d4acba22ef924ee5e82a7~mv2.webp", // fotos web (12)
+    "https://static.wixstatic.com/media/62f4bb_2665b6d239b14003a741897e60d3d48b~mv2.webp", // fotos web (13)
+    "https://static.wixstatic.com/media/62f4bb_d20999141f8c491ba0abe85db01da0a8~mv2.webp", // fotos web (14)
+    "https://static.wixstatic.com/media/62f4bb_240f88894101453782eaff4d18566fef~mv2.webp", // fotos web (15)
+    "https://static.wixstatic.com/media/62f4bb_131f2cca4d9f4425bd4ae646760af33c~mv2.webp", // fotos web (16)
+    "https://static.wixstatic.com/media/62f4bb_df9bff48aae946ae99da74a4b8831041~mv2.webp", // fotos web (17)
+    "https://static.wixstatic.com/media/62f4bb_2a3daa8564084ebd88b55027ee7faa99~mv2.webp", // fotos web (18)
+    "https://static.wixstatic.com/media/62f4bb_0686cb53896747828672926da9b1e1b3~mv2.webp", // fotos web (19)
+    "https://static.wixstatic.com/media/62f4bb_4238322d00be4cffb9504fc7dba2e62f~mv2.webp", // fotos web (20)
+    // Fotos 21-23: quita las // del principio para sumarlas (quedaría una última fila incompleta)
+    // "https://static.wixstatic.com/media/62f4bb_1ad1e2459b6248babe0170327674d2e0~mv2.webp", // fotos web (21)
+    // "https://static.wixstatic.com/media/62f4bb_f47ebc5891564e0d9a629a6ca5491d57~mv2.webp", // fotos web (22)
+    // "https://static.wixstatic.com/media/62f4bb_b045fa1267e74f4e8482436cde1b4132~mv2.webp", // fotos web (23)
   ];
 
   const gallery = document.getElementById('gallery');
