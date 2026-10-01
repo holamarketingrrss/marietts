@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: transparent;
+    overflow: clip;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+  .carousel-wrapper {
+    width: 100%;
+    overflow: clip;
+    position: relative;
+  }
+  .carousel-track {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+  .carousel-track:hover {
+    animation-play-state: paused;
+  }
+  .logo-item {
+    flex-shrink: 0;
+    height: 96px;
+    display: flex;
+    align-items: center;
+  }
+  .logo-item img {
+    height: 96px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+  }
+  /* Logos de un solo color: se pintan en blanco, como antes */
+  .logo-item img.mono {
+    filter: brightness(0) invert(1);
+    opacity: 0.75;
+  }
+  /* Logos a color: se muestran con sus colores reales */
+  .logo-item img.color {
+    opacity: 1;
+  }
+  .logo-item img:hover {
+    opacity: 1;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+<div class="carousel-wrapper">
+  <div class="carousel-track" id="track"></div>
+</div>
+<script>
+  // color: true = logo a color real · color: false = se pinta en blanco
+  const logos = [
+    { name: "Avianca",           color: true,  src: "https://static.wixstatic.com/media/62f4bb_2f390ddb87ce498e93981aed9346b4d5~mv2.png" },
+    { name: "Ferrari",           color: true,  src: "https://static.wixstatic.com/media/62f4bb_deaa703e8ad54636a9228fad9bc9f0a4~mv2.png" },
+    { name: "Miami Swim Week",   color: false, src: "https://static.wixstatic.com/media/c7958e_f71c348037ca40969c6bc9bdff243a36~mv2.png" },
+    { name: "University of Miami", color: false, src: "https://static.wixstatic.com/media/c7958e_9afee656acab488f82471eeeea3b02b1~mv2.png" },
+    { name: "W Hotels",          color: false, src: "https://static.wixstatic.com/media/c7958e_dab39bd1c44d4597b7cebd76cfd671c1~mv2.png" },
+    { name: "The Boca Raton",    color: true,  src: "https://static.wixstatic.com/media/62f4bb_d534799867b7484096076c5cd6e7ec28~mv2.png" },
+    { name: "Range Rover",       color: true,  src: "https://static.wixstatic.com/media/62f4bb_4862219b3e5c43ccbcc665ece7e63ae6~mv2.png" },
+    { name: "Banesco",           color: true,  src: "https://static.wixstatic.com/media/62f4bb_cad4b23d0a394c34816338e54f241027~mv2.png" },
+    { name: "Jaguar",            color: true,  src: "https://static.wixstatic.com/media/62f4bb_cec944b2d7654c058f47ade2b82108bc~mv2.png" },
+    { name: "Free People",       color: false, src: "https://static.wixstatic.com/media/c7958e_d40aa171b7b84e0f83637cb9d9acc892~mv2.png" },
+    { name: "Aetna",             color: true,  src: "https://static.wixstatic.com/media/62f4bb_918e469a469c4005a3e1609c6318b080~mv2.png" },
+    { name: "LTK",               color: false, src: "https://static.wixstatic.com/media/c7958e_96853d532d5a4cc7bf6df7f376a98d4f~mv2.png" },
+    { name: "Etam",              color: false, src: "https://static.wixstatic.com/media/c7958e_d1535a1011fa44cd831a4b5cb0eebcba~mv2.png" },
+  ];
+  const track = document.getElementById('track');
+  [...logos, ...logos].forEach(logo => {
+    const item = document.createElement('div');
+    item.className = 'logo-item';
+    const img = document.createElement('img');
+    img.src = logo.src;
+    img.alt = logo.name;
+    img.className = logo.color ? 'color' : 'mono';
+    item.appendChild(img);
+    track.appendChild(item);
+  });
+  function notifyHeight() {
+    window.parent.postMessage({ type: 'iwResizeHeight', height: document.body.scrollHeight }, '*');
+  }
+  window.addEventListener('load', notifyHeight);
+  notifyHeight();
+</script>
+</body>
+</html>
