@@ -65,6 +65,8 @@
 
   @media (max-width: 600px) {
     :root { --cols: 2; --gap: 10px; }
+    /* En celular solo se muestran las 8 primeras fotos (4 filas de 2) */
+    .item:nth-child(n+9) { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
