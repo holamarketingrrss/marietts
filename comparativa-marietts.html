@@ -35,7 +35,7 @@
     --muted-border: #DCD6CA;
     --muted-text: #6E6552;
     --text: #433A26;           /* texto */
-    --bg: #F4F1EC;             /* fondo de la sección */
+    --bg: transparent;         /* fondo: transparente, toma el de la sección de Wix */
     --font-display: 'FSP DEMO', Georgia, serif;   /* opción B: 'FSP DEMO B' */
     --font-body: 'Lexend', system-ui, -apple-system, sans-serif;
     --radius: 12px;
@@ -220,7 +220,8 @@
 
 <script>
   /* ===== CONTENIDO: edita aquí filas, textos, enlace y precio ===== */
-  const CTA_URL  = "https://www.mariettsflavors.info/";   // adónde lleva el botón
+  // Dirección COMPLETA de la landing + el ancla. Un "#ancla" solo no funciona dentro del bloque de Wix.
+  const CTA_URL  = "https://www.mariettsflavors.info/home-1#flashquotes-container";   // adónde lleva el botón
   const CTA_NOTE = "";                                    // ej: "Events starting at $1,050" (vacío = no se muestra)
 
   const rows = [
@@ -235,14 +236,9 @@
       ours:  { title: "A dedicated event coordinator guides your booking and planning", desc: "Experienced baristas run the show at your event." }
     },
     {
-      label: "Cart branding",
-      other: { title: "Front of the cart only" },
-      ours:  { title: "Fully branded cart, designed around your event" }
-    },
-    {
-      label: "Cups",
-      other: { title: "Stickers only" },
-      ours:  { title: "Fully branded, printed cups" }
+      label: "Branding",
+      other: { title: "Front of the cart only, stickers on cups" },
+      ours:  { title: "Options of fully branded cart and printed cups, to align your vision" }
     },
     {
       label: "Menu",
